@@ -2,9 +2,9 @@
 
 ## Información del Estudiante
 
-- **Nombre:** [Tu nombre completo aquí]
-- **Carrera:** [Tu carrera]
-- **Fecha de inicio:** [Fecha]
+- **Nombre:** Daniela Pinto
+- **Carrera:** PUCETEC SOFTWARE
+- **Fecha de inicio:** 12/05/2026
 
 ---
 
