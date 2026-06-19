@@ -67,7 +67,7 @@ const App: React.FC = () => (
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
           <IonTabButton tab="tab1" href="/tab1">
-            <IonIcon aria-hidden="true" icon={logoGithub} /> //para iconos
+            <IonIcon aria-hidden="true" icon={logoGithub} />
             <IonLabel>Repositorios</IonLabel>
           </IonTabButton>
           <IonTabButton tab="tab2" href="/tab2">
