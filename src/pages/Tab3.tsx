@@ -1,7 +1,24 @@
-import { IonCard, IonCardContent, IonCardSubtitle, IonCardTitle, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonHeader, IonPage, IonText, IonTitle, IonToolbar, useIonViewDidEnter } from '@ionic/react';
 import './Tab3.css';
+import React from 'react';
+import { GithubUser } from '../interfaces/GithubUser';
+import { fetchUserInfo } from '../services/GithubService';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const Tab3: React.FC = () => {
+  const [userInfo, setUserInfo] = React.useState<GithubUser | null>(null);
+  const [loading, setLoading] = React.useState(false);
+  const [errorMsg, setErrorMsg] = React.useState("");
+
+  useIonViewDidEnter(() => {
+    setLoading(true);
+    fetchUserInfo().then((user) =>{
+      setUserInfo(user);
+    }).catch((error) =>{
+      setErrorMsg("Error al cargar la informacion del usuario: " + error);
+    }).finally(() => setLoading(false))
+  });
+
   return (
     <IonPage>
       <IonHeader>
@@ -18,22 +35,21 @@ const Tab3: React.FC = () => {
         
         
         <div className="card-container">
-          <IonCard className='card'>
-            <img
-            src='https://cdn-icons-png.flaticon.com/512/25/25231.png'
-            alt='Avatar'
-            />
-            <IonHeader>
-              <IonCardTitle>Daniela Pinto</IonCardTitle>
-              <IonCardSubtitle>danielapintobazante</IonCardSubtitle>
+          {userInfo && (
+            <IonCard className='card'>
+              <img src='https://cdn-icons-png.flaticon.com/512/25/25231.png'alt='Avatar'/>
+              <IonCardHeader>
+                <IonCardTitle>{userInfo.name}</IonCardTitle>
+                <IonCardSubtitle>{userInfo.login}</IonCardSubtitle>
+              </IonCardHeader>
               <IonCardContent>
-                <p>Desarrollador de software con experiencia en aplicaciones moviles y web. Apasionado por la tecnologia, el aprendizaj conrinuo</p>
-              </IonCardContent>
-            </IonHeader>
-          </IonCard>
+                <p>{userInfo.bio}</p>
+              </IonCardContent>    
+            </IonCard>
+          )}
+          {errorMsg && <IonText color="danger">{errorMsg}</IonText>}
         </div>
-        
-
+        {loading && <LoadingSpinner />}
       </IonContent>
     </IonPage>
   );
