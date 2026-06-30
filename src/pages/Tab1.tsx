@@ -21,9 +21,6 @@ const Tab1: React.FC = () => {
     }).finally(() => {
       setLoading(false);
     });
-    /*const repos = await fetchRepositories();
-    setRepositoryList(repos);*/
-    setLoading(false);
   }
 
   useIonViewWillEnter(() => {

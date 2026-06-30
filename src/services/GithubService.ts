@@ -22,12 +22,12 @@ export const fetchRepositories = async () : Promise<Repository[]> => {
                 sort: "created",
                 direction: "desc",
                 per_page: 100,
-                affilation: "owner",
+                affiliation: "owner",
                 t: Date.now()
             }
         });
         if (response.status !== 200){
-            throw new Error( `$ {response.statusText}`);
+            throw new Error( `${response.statusText}`);
         }
 
         return response.data as Repository[]
@@ -36,6 +36,28 @@ export const fetchRepositories = async () : Promise<Repository[]> => {
         throw new Error(`${(error as Error).message}`);
     }
 }
+
+export const createRepository = async (
+  name: string,
+  description: string
+): Promise<Repository> => {
+  try {
+    const response = await apiClient.post("/user/repos", {
+      name,
+      description,
+      private: false
+    });
+
+    if (response.status !== 201) {
+      throw new Error(response.statusText);
+    }
+
+    return response.data as Repository;
+  } catch (error) {
+    console.error("Error creando repositorio:", error);
+    throw new Error((error as Error).message);
+  }
+};
  
 export const fetchUserInfo = async (): Promise<GithubUser | null> => {
     try {
@@ -45,6 +67,6 @@ export const fetchUserInfo = async (): Promise<GithubUser | null> => {
         }
         return response.data as GithubUser;
     } catch (error) {
-        throw new Error(`$(error as Error).message}`);
+        throw new Error(`${(error as Error).message}`);
     }
 }
